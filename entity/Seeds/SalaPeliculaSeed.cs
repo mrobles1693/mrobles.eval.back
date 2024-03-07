@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace services.Seeds
+namespace entity.Seeds
 {
     public class SalaPeliculaSeed : IEntityTypeConfiguration<SalaPeliculaEntity>
     {

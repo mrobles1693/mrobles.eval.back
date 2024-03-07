@@ -1,8 +1,7 @@
-﻿using entity;
-using Microsoft.EntityFrameworkCore;
-using services.Seeds;
+﻿using Microsoft.EntityFrameworkCore;
+using entity.Seeds;
 
-namespace services
+namespace entity
 {
     public class BackContext : DbContext
     {

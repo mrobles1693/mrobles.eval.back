@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using services;
+using entity;
 
 #nullable disable
 
-namespace services.Migrations
+namespace entity.Migrations
 {
     [DbContext(typeof(BackContext))]
-    [Migration("20240307164906_MigracionInicial")]
+    [Migration("20240307172637_MigracionInicial")]
     partial class MigracionInicial
     {
         /// <inheritdoc />

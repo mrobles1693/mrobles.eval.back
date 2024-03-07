@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 
-namespace services.Seeds
+namespace entity.Seeds
 {
     public class SalaSeed : IEntityTypeConfiguration<SalaEntity>
     {

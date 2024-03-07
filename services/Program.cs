@@ -1,3 +1,4 @@
+using entity;
 using Microsoft.EntityFrameworkCore;
 using services;
 
@@ -10,7 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<BackContext>(options=>options.UseSqlServer(builder.Configuration["ConnectionStrings:cnDB"]));
-
+builder.Services.ConfigureRepositoryManager();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
