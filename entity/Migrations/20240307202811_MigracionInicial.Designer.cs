@@ -12,7 +12,7 @@ using entity;
 namespace entity.Migrations
 {
     [DbContext(typeof(BackContext))]
-    [Migration("20240307172637_MigracionInicial")]
+    [Migration("20240307202811_MigracionInicial")]
     partial class MigracionInicial
     {
         /// <inheritdoc />
@@ -60,10 +60,14 @@ namespace entity.Migrations
 
                     b.HasKey("nIdCliente");
 
+                    b.HasIndex("nIdGenero");
+
+                    b.HasIndex("nIdTipoDocumento");
+
                     b.ToTable("Cliente");
                 });
 
-            modelBuilder.Entity("entity.GeneroEntiy", b =>
+            modelBuilder.Entity("entity.GeneroEntity", b =>
                 {
                     b.Property<int>("nIdGenero")
                         .ValueGeneratedOnAdd()
@@ -78,6 +82,35 @@ namespace entity.Migrations
                     b.HasKey("nIdGenero");
 
                     b.ToTable("Genero");
+
+                    b.HasData(
+                        new
+                        {
+                            nIdGenero = 1,
+                            sGenero = "Masculino"
+                        },
+                        new
+                        {
+                            nIdGenero = 2,
+                            sGenero = "Femenino"
+                        });
+                });
+
+            modelBuilder.Entity("entity.GeneroPeliculaEntity", b =>
+                {
+                    b.Property<int>("nIdGenero")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("nIdGenero"));
+
+                    b.Property<string>("sGenero")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("nIdGenero");
+
+                    b.ToTable("GeneroPelicula");
 
                     b.HasData(
                         new
@@ -447,15 +480,68 @@ namespace entity.Migrations
                         });
                 });
 
-            modelBuilder.Entity("entity.PeliculaEntity", b =>
+            modelBuilder.Entity("entity.TipoDocumentoEntity", b =>
                 {
-                    b.HasOne("entity.GeneroEntiy", "genero")
+                    b.Property<int>("nIdTipoDocumento")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("nIdTipoDocumento"));
+
+                    b.Property<string>("sTipoDocumento")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("nIdTipoDocumento");
+
+                    b.ToTable("TipoDocumento");
+
+                    b.HasData(
+                        new
+                        {
+                            nIdTipoDocumento = 1,
+                            sTipoDocumento = "DNI"
+                        },
+                        new
+                        {
+                            nIdTipoDocumento = 2,
+                            sTipoDocumento = "CE"
+                        },
+                        new
+                        {
+                            nIdTipoDocumento = 3,
+                            sTipoDocumento = "RUC"
+                        });
+                });
+
+            modelBuilder.Entity("entity.ClienteEntity", b =>
+                {
+                    b.HasOne("entity.GeneroEntity", "genero")
                         .WithMany()
                         .HasForeignKey("nIdGenero")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("entity.TipoDocumentoEntity", "tipoDocumento")
+                        .WithMany()
+                        .HasForeignKey("nIdTipoDocumento")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("genero");
+
+                    b.Navigation("tipoDocumento");
+                });
+
+            modelBuilder.Entity("entity.PeliculaEntity", b =>
+                {
+                    b.HasOne("entity.GeneroPeliculaEntity", "generoPelicula")
+                        .WithMany()
+                        .HasForeignKey("nIdGenero")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("generoPelicula");
                 });
 
             modelBuilder.Entity("entity.ReservaEntity", b =>

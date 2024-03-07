@@ -24,7 +24,7 @@ namespace repository
         public async Task<PeliculaEntity?> GetById(int nIdPelicula)
         {
             return await _context.Pelicula
-                .Include(p => p.genero)
+                .Include(p => p.generoPelicula)
                 .FirstOrDefaultAsync(p => p.nIdPelicula == nIdPelicula);
         }
     }

@@ -14,25 +14,6 @@ namespace entity.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Cliente",
-                columns: table => new
-                {
-                    nIdCliente = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    nIdTipoDocumento = table.Column<int>(type: "int", nullable: false),
-                    sDocumento = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    sNombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    sApellidoP = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    sApellidoM = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    dFechaNacimiento = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    nIdGenero = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Cliente", x => x.nIdCliente);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Genero",
                 columns: table => new
                 {
@@ -43,6 +24,19 @@ namespace entity.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Genero", x => x.nIdGenero);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GeneroPelicula",
+                columns: table => new
+                {
+                    nIdGenero = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    sGenero = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GeneroPelicula", x => x.nIdGenero);
                 });
 
             migrationBuilder.CreateTable(
@@ -57,6 +51,19 @@ namespace entity.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Sala", x => x.nIdSala);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TipoDocumento",
+                columns: table => new
+                {
+                    nIdTipoDocumento = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    sTipoDocumento = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TipoDocumento", x => x.nIdTipoDocumento);
                 });
 
             migrationBuilder.CreateTable(
@@ -75,10 +82,41 @@ namespace entity.Migrations
                 {
                     table.PrimaryKey("PK_Pelicula", x => x.nIdPelicula);
                     table.ForeignKey(
-                        name: "FK_Pelicula_Genero_nIdGenero",
+                        name: "FK_Pelicula_GeneroPelicula_nIdGenero",
+                        column: x => x.nIdGenero,
+                        principalTable: "GeneroPelicula",
+                        principalColumn: "nIdGenero",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Cliente",
+                columns: table => new
+                {
+                    nIdCliente = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    nIdTipoDocumento = table.Column<int>(type: "int", nullable: false),
+                    sDocumento = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    sNombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    sApellidoP = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    sApellidoM = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    dFechaNacimiento = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    nIdGenero = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cliente", x => x.nIdCliente);
+                    table.ForeignKey(
+                        name: "FK_Cliente_Genero_nIdGenero",
                         column: x => x.nIdGenero,
                         principalTable: "Genero",
                         principalColumn: "nIdGenero",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Cliente_TipoDocumento_nIdTipoDocumento",
+                        column: x => x.nIdTipoDocumento,
+                        principalTable: "TipoDocumento",
+                        principalColumn: "nIdTipoDocumento",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -141,6 +179,15 @@ namespace entity.Migrations
                 columns: new[] { "nIdGenero", "sGenero" },
                 values: new object[,]
                 {
+                    { 1, "Masculino" },
+                    { 2, "Femenino" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "GeneroPelicula",
+                columns: new[] { "nIdGenero", "sGenero" },
+                values: new object[,]
+                {
                     { 1, "Acción" },
                     { 2, "Terror" },
                     { 3, "Comedia" }
@@ -155,6 +202,16 @@ namespace entity.Migrations
                     { 2, 100, "B" },
                     { 3, 100, "C" },
                     { 4, 100, "D" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "TipoDocumento",
+                columns: new[] { "nIdTipoDocumento", "sTipoDocumento" },
+                values: new object[,]
+                {
+                    { 1, "DNI" },
+                    { 2, "CE" },
+                    { 3, "RUC" }
                 });
 
             migrationBuilder.InsertData(
@@ -202,6 +259,16 @@ namespace entity.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Cliente_nIdGenero",
+                table: "Cliente",
+                column: "nIdGenero");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cliente_nIdTipoDocumento",
+                table: "Cliente",
+                column: "nIdTipoDocumento");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Pelicula_nIdGenero",
                 table: "Pelicula",
                 column: "nIdGenero");
@@ -240,13 +307,19 @@ namespace entity.Migrations
                 name: "SalaPelicula");
 
             migrationBuilder.DropTable(
+                name: "Genero");
+
+            migrationBuilder.DropTable(
+                name: "TipoDocumento");
+
+            migrationBuilder.DropTable(
                 name: "Pelicula");
 
             migrationBuilder.DropTable(
                 name: "Sala");
 
             migrationBuilder.DropTable(
-                name: "Genero");
+                name: "GeneroPelicula");
         }
     }
 }

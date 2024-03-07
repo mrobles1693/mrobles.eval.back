@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace entity
 {
-    public class GeneroEntiy
+    public class GeneroPeliculaEntity
     {
         [Key]
         public int nIdGenero { get; set; }

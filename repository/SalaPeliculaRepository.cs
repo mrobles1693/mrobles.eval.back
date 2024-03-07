@@ -18,7 +18,7 @@ namespace repository
             var res = _context.SalaPelicula
                 .Include(sp => sp.sala)
                 .Include(sp => sp.pelicula)
-                .Include(sp => sp.pelicula.genero).AsQueryable();
+                .Include(sp => sp.pelicula.generoPelicula).AsQueryable();
 
             if(nIdSala != null) 
             {

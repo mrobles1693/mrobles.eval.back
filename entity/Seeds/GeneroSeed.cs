@@ -1,17 +1,20 @@
-﻿using entity;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace entity.Seeds
 {
-    public class GeneroSeed : IEntityTypeConfiguration<GeneroEntiy>
+    public class GeneroSeed : IEntityTypeConfiguration<GeneroEntity>
     {
-        public void Configure(EntityTypeBuilder<GeneroEntiy> builder) 
+        public void Configure(EntityTypeBuilder<GeneroEntity> builder)
         {
             builder.HasData(
-                new GeneroEntiy() { nIdGenero = 1, sGenero = "Acción"},    
-                new GeneroEntiy() { nIdGenero = 2, sGenero = "Terror" },
-                new GeneroEntiy() { nIdGenero = 3, sGenero = "Comedia" }
+                new GeneroEntity() { nIdGenero = 1, sGenero = "Masculino" },
+                new GeneroEntity() { nIdGenero = 2, sGenero = "Femenino" }
             );
         }
     }

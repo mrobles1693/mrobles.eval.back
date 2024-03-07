@@ -12,8 +12,8 @@ namespace entity
         public TimeSpan tDuracion { get; set; }
         public byte[]? bPortada { get; set; }
 
-        [ForeignKey("genero")]
+        [ForeignKey("generoPelicula")]
         public int nIdGenero { get; set; }
-        public GeneroEntiy genero { get; set; }
+        public GeneroPeliculaEntity generoPelicula { get; set; }
     }
 }
