@@ -40,7 +40,7 @@ namespace repository
                 res = res.Where(sp => sp.dFechaProgramada > dFechaHoraInicio);
             }
 
-            return res.ToList();
+            return await res.ToListAsync();
         }
     }
 }

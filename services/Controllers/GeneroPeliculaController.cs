@@ -6,26 +6,26 @@ namespace services.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PeliculaController : ControllerBase
+    public class GeneroPeliculaController : ControllerBase
     {
-        public readonly IPeliculaRepository repository;
+        public readonly IGeneroPeliculaRepository repository;
 
-        public PeliculaController(IPeliculaRepository _repository)
+        public GeneroPeliculaController(IGeneroPeliculaRepository _repository)
         {
             repository = _repository;
         }
 
         [HttpGet("[action]")]
-        public async Task<ActionResult<ApiResponse<PeliculaEntity>>> getPelicula(int nIdPelicula)
+        public async Task<ActionResult<ApiResponse<List<GeneroPeliculaEntity>>>> GetListGeneroPelicula()
         {
-            ApiResponse<PeliculaEntity> response = new ApiResponse<PeliculaEntity>();
+            ApiResponse<List<GeneroPeliculaEntity>> response = new ApiResponse<List<GeneroPeliculaEntity>>();
 
             try
             {
-                var result = await repository.GetById(nIdPelicula);
+                var result = await repository.GetListGeneroPelicula();
 
                 response.success = true;
-                response.data = (PeliculaEntity) result;
+                response.data = (List<GeneroPeliculaEntity>)result;
                 return StatusCode(200, response);
             }
             catch (Exception ex)

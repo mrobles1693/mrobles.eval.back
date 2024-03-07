@@ -1,6 +1,5 @@
 ﻿using entity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using repository.Interfaces;
 
 namespace repository
@@ -12,13 +11,6 @@ namespace repository
         public PeliculaRepository(BackContext context)
         {
             _context = context;
-        }
-
-        public async Task<PeliculaEntity> Insert(PeliculaEntity pelicula)
-        {
-            EntityEntry<PeliculaEntity> insert = await _context.Pelicula.AddAsync(pelicula);
-            await _context.SaveChangesAsync();
-            return insert.Entity;
         }
 
         public async Task<PeliculaEntity?> GetById(int nIdPelicula)

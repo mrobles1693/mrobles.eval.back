@@ -1,4 +1,5 @@
 ﻿using entity;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using repository.Interfaces;
 
@@ -6,26 +7,26 @@ namespace services.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PeliculaController : ControllerBase
+    public class ReservaController : ControllerBase
     {
-        public readonly IPeliculaRepository repository;
+        IReservaRepository repository;
 
-        public PeliculaController(IPeliculaRepository _repository)
+        public ReservaController(IReservaRepository _repository)
         {
             repository = _repository;
         }
 
-        [HttpGet("[action]")]
-        public async Task<ActionResult<ApiResponse<PeliculaEntity>>> getPelicula(int nIdPelicula)
+        [HttpPost]
+        public async Task<ActionResult<ApiResponse<ReservaEntity>>> insertReserva([FromBody] ReservaEntity reserva)
         {
-            ApiResponse<PeliculaEntity> response = new ApiResponse<PeliculaEntity>();
+            ApiResponse<ReservaEntity> response = new ApiResponse<ReservaEntity>();
 
             try
             {
-                var result = await repository.GetById(nIdPelicula);
+                var result = await repository.Insert(reserva);
 
                 response.success = true;
-                response.data = (PeliculaEntity) result;
+                response.data = (ReservaEntity)result;
                 return StatusCode(200, response);
             }
             catch (Exception ex)
