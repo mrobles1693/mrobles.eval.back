@@ -18,7 +18,8 @@ namespace repository
             var res = _context.SalaPelicula
                 .Include(sp => sp.sala)
                 .Include(sp => sp.pelicula)
-                .Include(sp => sp.pelicula.generoPelicula).AsQueryable();
+                .Include(sp => sp.pelicula.generoPelicula)
+                .AsQueryable();
 
             if(nIdSala != null) 
             {
@@ -39,6 +40,15 @@ namespace repository
             {
                 res = res.Where(sp => sp.dFechaProgramada > dFechaHoraInicio);
             }
+
+            res = res.Select(sp => new SalaPeliculaEntity { 
+                nIdSalaPelicula = sp.nIdSalaPelicula,
+                nIdSala = sp.nIdSala,
+                nIdPelicula = sp.nIdPelicula,
+                sala = sp.sala,
+                pelicula = sp.pelicula,
+                nCantidadDisponible = sp.sala.nCapacidad - ( _context.Reserva.Where(r => r.nIdSalaPelicula == sp.nIdSalaPelicula).Sum(r => r.nCantidad) )
+            });
 
             return await res.ToListAsync();
         }

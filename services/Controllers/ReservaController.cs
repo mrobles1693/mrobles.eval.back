@@ -16,7 +16,7 @@ namespace services.Controllers
             repository = _repository;
         }
 
-        [HttpPost]
+        [HttpPost("[action]")]
         public async Task<ActionResult<ApiResponse<ReservaEntity>>> insertReserva([FromBody] ReservaEntity reserva)
         {
             ApiResponse<ReservaEntity> response = new ApiResponse<ReservaEntity>();

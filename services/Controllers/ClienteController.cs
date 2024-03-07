@@ -16,7 +16,7 @@ namespace services.Controllers
             repository = _repository;
         }
 
-        [HttpPost]
+        [HttpPost("[action]")]
         public async Task<ActionResult<ApiResponse<ClienteEntity>>> insertCliente([FromBody] ClienteEntity cliente)
         {
             ApiResponse<ClienteEntity> response = new ApiResponse<ClienteEntity>();

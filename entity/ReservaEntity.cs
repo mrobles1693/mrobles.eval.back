@@ -9,10 +9,12 @@ namespace entity
         [Key]
         public int nIdReserva { get; set; }
 
-        [ForeignKey("nIdCliente")]
+        [ForeignKey("cliente")]
+        public int nIdCliente { get; set; }
         public ClienteEntity cliente{ get; set; }
 
-        [ForeignKey("nIdSalaPelicula")]
+        [ForeignKey("salaPelicula")]
+        public int nIdSalaPelicula { get; set; }
         public SalaPeliculaEntity salaPelicula { get; set; }
 
         public int nCantidad { get; set; }

@@ -17,5 +17,8 @@ namespace entity
         public PeliculaEntity pelicula { get; set; }
         
         public DateTime dFechaProgramada { get; set; }
+
+        [NotMapped]
+        public int nCantidadDisponible { get; set; }
     }
 }
