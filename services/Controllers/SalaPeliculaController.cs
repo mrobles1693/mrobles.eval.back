@@ -1,4 +1,5 @@
 ﻿using entity;
+using entity.DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using repository.Interfaces;
@@ -16,14 +17,14 @@ namespace services.Controllers
             repository = _repository;
         }
 
-        [HttpGet("[action]")]
-        public async Task<ActionResult<ApiResponse<List<SalaPeliculaEntity>>>> getSalaPelicula(int? nIdSala, int? nIdGenero, string? sTitulo, DateTime? dFechaHoraInicio)
+        [HttpPost("[action]")]
+        public async Task<ActionResult<ApiResponse<List<SalaPeliculaEntity>>>> getSalaPelicula([FromBody] SalaPeliculaFilterDTO filtros)
         {
             ApiResponse<List<SalaPeliculaEntity>> response = new ApiResponse<List<SalaPeliculaEntity>>();
 
             try
             {
-                var result = await repository.GetListPeliculasByFilters(nIdSala, nIdGenero, sTitulo, dFechaHoraInicio);
+                var result = await repository.GetListPeliculasByFilters(filtros);
 
                 response.success = true;
                 response.data = (List<SalaPeliculaEntity>) result;

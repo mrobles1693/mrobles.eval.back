@@ -1,4 +1,5 @@
 ﻿using entity;
+using entity.DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using repository.Interfaces;
@@ -17,7 +18,7 @@ namespace services.Controllers
         }
 
         [HttpPost("[action]")]
-        public async Task<ActionResult<ApiResponse<ClienteEntity>>> insertCliente([FromBody] ClienteEntity cliente)
+        public async Task<ActionResult<ApiResponse<ClienteEntity>>> insertCliente([FromBody] ClienteDTO cliente)
         {
             ApiResponse<ClienteEntity> response = new ApiResponse<ClienteEntity>();
 

@@ -1,4 +1,5 @@
 ﻿using entity;
+using entity.DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using repository.Interfaces;
@@ -17,13 +18,14 @@ namespace services.Controllers
         }
 
         [HttpPost("[action]")]
-        public async Task<ActionResult<ApiResponse<ReservaEntity>>> insertReserva([FromBody] ReservaEntity reserva)
+        public async Task<ActionResult<ApiResponse<ReservaEntity>>> insertReserva([FromBody] ReservaDTO reserva)
         {
             ApiResponse<ReservaEntity> response = new ApiResponse<ReservaEntity>();
 
             try
             {
                 var result = await repository.Insert(reserva);
+                result = await repository.GetById(result.nIdReserva);
 
                 response.success = true;
                 response.data = (ReservaEntity)result;

@@ -1,9 +1,10 @@
 ﻿using entity;
+using entity.DTO;
 
 namespace repository.Interfaces
 {
     public interface ISalaPeliculaRepository
     {
-        Task<List<SalaPeliculaEntity>> GetListPeliculasByFilters(int? nIdSala, int? nIdGenero, string? sTitulo, DateTime? dFechaHoraInicio);
+        Task<List<SalaPeliculaEntity>> GetListPeliculasByFilters(SalaPeliculaFilterDTO filtros);
     }
 }

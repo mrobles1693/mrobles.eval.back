@@ -12,8 +12,8 @@ using entity;
 namespace entity.Migrations
 {
     [DbContext(typeof(BackContext))]
-    [Migration("20240307230816_MigracionInicial")]
-    partial class MigracionInicial
+    [Migration("20240308064206_CargaFinal")]
+    partial class CargaFinal
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
